@@ -2493,6 +2493,30 @@ class Widget extends Base {
         return await this.getVehicleDetails(accessToken, forceRefresh);
     }
 
+      async getNonce () {
+            const req = new Request(
+              'http://yymm.huchundong.com:7000/bimmer/getNonce')
+            req.headers = {
+              'Content-Type': 'application/json',
+            }
+            MyLog('[0+]获取随机秘钥')
+            let p = {
+              'mobile': '86' + defaultData.username,
+              'verify': 'BMW-LINKER偷的一手好代码',
+            }
+            req.method = 'POST'
+            req.body = JSON.stringify(p)
+            const res = await req.loadJSON()
+            if (res.code === 200) {
+              console.log(res)
+              return res.data
+            } else {
+              MyLog('[0-]获取随机秘钥失败')
+              App.error = res.message
+              return null
+            }
+         }
+    
     async getPublicKey() {
         let req = new Request(BMW_SERVER_HOST + '/eadrax-coas/v1/cop/publickey');
 
@@ -2561,15 +2585,10 @@ class Widget extends Base {
 
     async myBMWLogin() {
         console.log('Start to get token');
+        let pk = await this.getPublicKey()
+        let nonce = await this.getNonce()
         const _password = await this.getEncryptedPassword();
         let req = new Request(BMW_SERVER_HOST + '/eadrax-coas/v2/login/pwd');
-
-        req.method = 'POST';
-
-        req.body = JSON.stringify({
-            mobile: this.userConfigData.username,
-            password: _password
-        });
 
         req.headers = {
           'user-agent': 'Dart/2.13 (dart:io)',
@@ -2581,7 +2600,14 @@ class Widget extends Base {
           '24-hour-format': 'true',
           'x-login-nonce': nonce,
         }
+        req.method = 'POST';
 
+        req.body = JSON.stringify({
+            mobile: '86' + this.userConfigData.username,
+            password: _password,
+            'deviceId': '6D3EB088-09A4-4B7E-A408-12B35275B946'
+        });
+        
         console.log('trying to login');
         const res = await req.loadJSON();
         if (res.code == 200) {
