@@ -2499,7 +2499,6 @@ class Widget extends Base {
             req.headers = {
               'Content-Type': 'application/json',
             }
-            MyLog('[0+]获取随机秘钥')
             let p = {
               'mobile': '86' + defaultData.username,
               'verify': 'BMW-LINKER偷的一手好代码',
@@ -2511,7 +2510,6 @@ class Widget extends Base {
               console.log(res)
               return res.data
             } else {
-              MyLog('[0-]获取随机秘钥失败')
               App.error = res.message
               return null
             }
