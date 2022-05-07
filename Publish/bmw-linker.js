@@ -2500,7 +2500,7 @@ class Widget extends Base {
               'Content-Type': 'application/json',
             }
             let p = {
-              'mobile': '86' + defaultData.username,
+              'mobile': '86' + this.userConfigData.username,
               'verify': 'BMW-LINKER偷的一手好代码',
             }
             req.method = 'POST'
