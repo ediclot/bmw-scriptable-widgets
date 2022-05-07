@@ -2500,7 +2500,7 @@ class Widget extends Base {
               'Content-Type': 'application/json',
             }
             let p = {
-              'mobile': '86' + this.userConfigData.username,
+              'mobile':  this.userConfigData.username,
               'verify': 'BMW-LINKER偷的一手好代码',
             }
             req.method = 'POST'
@@ -2604,7 +2604,7 @@ class Widget extends Base {
         }
         req.method = 'POST';
         let p = {
-          'mobile': '86' + this.userConfigData.username,
+          'mobile': this.userConfigData.username,
           'password': encryptPass,
           'deviceId': '6D3EB088-09A4-4B7E-A408-12B35275B946',
         }
