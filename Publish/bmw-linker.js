@@ -2496,12 +2496,20 @@ class Widget extends Base {
     async getPublicKey() {
         let req = new Request(BMW_SERVER_HOST + '/eadrax-coas/v1/cop/publickey');
 
-        req.headers = {};
+       req.headers = {
+      'user-agent': 'Dart/2.13 (dart:io)',
+      'x-user-agent': 'ios(15.4.1);bmw;2.3.0(13603)',
+      'accept-language': 'zh_CN',
+      'host': 'myprofile.bmw.com.cn',
+      'x-cluster-use-mock': 'never',
+      '24-hour-format': 'true',
+        }
 
         const res = await req.loadJSON();
         if (res.code == 200 && res.data.value) {
             console.log('Getting public key success');
-            return res.data.value;
+            let pk = res.data.value.split('\r\n')[1]
+            return pk
         } else {
             console.log('Getting public key failed');
             return '';
@@ -2513,7 +2521,7 @@ class Widget extends Base {
 
         if (!forceRefresh && Keychain.contains(MY_BMW_TOKEN_UPDATE_LAST_AT)) {
             let lastUpdate = parseInt(Keychain.get(MY_BMW_TOKEN_UPDATE_LAST_AT));
-            if (lastUpdate > new Date().valueOf() - 1000 * 60 * 50) {
+            if (lastUpdate > new Date().valueOf() - 1000 * 60 * 30) {
                 if (Keychain.contains(MY_BMW_TOKEN)) {
                     accessToken = Keychain.get(MY_BMW_TOKEN);
                 }
@@ -2554,7 +2562,7 @@ class Widget extends Base {
     async myBMWLogin() {
         console.log('Start to get token');
         const _password = await this.getEncryptedPassword();
-        let req = new Request(BMW_SERVER_HOST + '/eadrax-coas/v1/login/pwd');
+        let req = new Request(BMW_SERVER_HOST + '/eadrax-coas/v2/login/pwd');
 
         req.method = 'POST';
 
@@ -2563,7 +2571,16 @@ class Widget extends Base {
             password: _password
         });
 
-        req.headers = BMW_HEADERS;
+        req.headers = {
+          'user-agent': 'Dart/2.13 (dart:io)',
+          'x-user-agent': 'ios(15.4.1);bmw;2.3.0(13603)',
+          'content-type': 'application/json; charset=utf-8',
+          'accept-language': 'zh-CN',
+          'host': 'myprofile.bmw.com.cn',
+          'x-cluster-use-mock': 'never',
+          '24-hour-format': 'true',
+          'x-login-nonce': nonce,
+        }
 
         console.log('trying to login');
         const res = await req.loadJSON();
