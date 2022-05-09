@@ -8,11 +8,8 @@
 <body>
   <h1><a href="https://x.im3x.cn" style="text-decoration: none;color:#666;">「bmw小组件」</a>安装指导</h1>
   <button id="copy" onclick="copy()">👇 1.点击复制下方代码</button>
-  <textarea id="js" rows="20" readonly style="min-width: 400px;">const FILE_MGR = FileManager[module.filename.includes('Documents/iCloud~') ? 'iCloud': 'local']();
-let files = FILE_MGR.listContents(FILE_MGR.documentsDirectory());
-await Promise.all(['bmw-linker.js'].map(async(js) = >{
-	const REQ = new Request(`https: //raw.fastgit.org/ediclot/bmwwwwidgets/main/Publish/${encodeURIComponent(js)}`);        const RES = await REQ.load();        try {            FILE_MGR.remove(FILE_MGR.joinPath(FILE_MGR.documentsDirectory(), js));        } catch (e) {}        FILE_MGR.write(FILE_MGR.joinPath(FILE_MGR.documentsDirectory(), js), RES);    }));FILE_MGR.remove(module.filename);Safari.open('scriptable:///run?scriptName=' + encodeURIComponent('bmw-linker.js'));</textarea>
-  <p>打开 Scriptable，点击 ➕，粘贴，运行 ▶️</p>
+<textarea id="js" rows="20" readonly style="min-width: 400px;">const FILE_MGR = FileManager[module.filename.includes('Documents/iCloud~') ? 'iCloud' : 'local']();let files = FILE_MGR.listContents(FILE_MGR.documentsDirectory());await Promise.all(    ['bmw-linker.js'].map(async (js) => {        const REQ = new Request(`https://cdn.jsdelivr.net/gh/ediclot/bmw-scriptable-widgets@main/Publish/${encodeURIComponent(js)}`);        const RES = await REQ.load();        try {            FILE_MGR.remove(FILE_MGR.joinPath(FILE_MGR.documentsDirectory(), js));        } catch (e) {}        FILE_MGR.write(FILE_MGR.joinPath(FILE_MGR.documentsDirectory(), js), RES);    }));FILE_MGR.remove(module.filename);Safari.open('scriptable:///run?scriptName=' + encodeURIComponent('bmw-linker.js'));</textarea>
+	<p>打开 Scriptable，点击 ➕，粘贴，运行 ▶️</p>
   <a id="open" href="scriptable:///add?scriptName=hello">👉 2. 点击打开 Scriptable</a>
 </body>
 <style>
